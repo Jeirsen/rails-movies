@@ -4,8 +4,7 @@ class MoviesController < ApplicationController
   # GET /list-movies
   def list_movies_by_date
     if (params[:init_presentation].blank? or params[:end_presentation].blank?)
-        response = {success: false, data: "Missing parameters"}
-        status = 400
+        response = Movie.all
     else
         response = Movie.where(:init_presentation => params[:init_presentation]).or(Movie.where(:end_presentation => params[:end_presentation]))
         #response = Movie.where('init_presentation BETWEEN ? AND ?', params[:init_presentation], params[:end_presentation])

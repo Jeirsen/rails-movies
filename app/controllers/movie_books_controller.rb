@@ -2,10 +2,9 @@ class MovieBooksController < ApplicationController
     
   def list_booking
     if (params[:presentation_date].blank?)
-        response = {success: false, data: "Missing parameters"}
-        status = 400
+        response = MovieBook.joins(:movie).select("movie_books.id, movies.id, movies.name, movie_books.client_name, movie_books.email, movie_books.client_identification, movie_books.cell_phone, movie_books.presentation_date")
     else
-        response = MovieBook.where(:presentation_date => params[:presentation_date])
+        response = MovieBook.joins(:movie).select("movie_books.id, movies.id, movies.name, movie_books.client_name, movie_books.email, movie_books.client_identification, movie_books.cell_phone").where(:presentation_date => params[:presentation_date])
     end
     render json: response, status: status
   end
